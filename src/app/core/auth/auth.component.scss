@@ -1,0 +1,9 @@
+.auth{ min-height:100vh; display:grid; place-items:center; padding:24px }
+.auth__card{ width:min(420px,92vw); background:var(--card); border:1px solid var(--border); border-radius:18px; padding:24px }
+.auth__title{ margin:0 0 16px }
+.form{ display:grid; gap:12px }
+.form input{ width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:color-mix(in oklab,var(--bg) 90%, #000 10%); color:var(--fg) }
+.btn{ background:var(--fg); color:var(--bg); border:none; border-radius:10px; padding:10px 14px; font-weight:600; cursor:pointer }
+.btn--ghost{ background:transparent; color:var(--fg); border:1px solid var(--border) }
+.btn--sm{ padding:8px 10px; font-size:14px }
+.error{ color:#ff6b6b; margin-top:8px }

@@ -1,0 +1,79 @@
+<div class="login-container">
+  <div class="login-wrapper">
+    <a class="back-link" (click)="onCancel()" role="button" tabindex="0">
+      ← Volver
+    </a>
+
+    <div class="login-card">
+      <h1 class="login-title">Acceso</h1>
+
+      <form 
+        #loginForm="ngForm" 
+        id="loginForm"
+        (ngSubmit)="onSubmit(loginForm)" 
+        autocomplete="on"
+        novalidate>
+        
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            [(ngModel)]="username"
+            #usernameInput="ngModel"
+            required
+            autocomplete="username"
+            [disabled]="isLoading"
+            (keydown)="onEnterKey($event)"
+            class="form-input" />
+          
+          <div class="field-error" *ngIf="usernameInput.invalid && usernameInput.touched">
+            El usuario es requerido
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            [(ngModel)]="password"
+            #passwordInput="ngModel"
+            required
+            autocomplete="current-password"
+            [disabled]="isLoading"
+            (keydown)="onEnterKey($event)"
+            class="form-input" />
+          
+          <div class="field-error" *ngIf="passwordInput.invalid && passwordInput.touched">
+            La contraseña es requerida
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button
+            type="button"
+            class="btn btn-outline"
+            (click)="onCancel()"
+            [disabled]="isLoading">
+            Cancelar
+          </button>
+          
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="loginForm.invalid || isLoading">
+            <span *ngIf="!isLoading">Entrar</span>
+            <span *ngIf="isLoading">Entrando...</span>
+          </button>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage" aria-live="polite">
+          {{ errorMessage }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

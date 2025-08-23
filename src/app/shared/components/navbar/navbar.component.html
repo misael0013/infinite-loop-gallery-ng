@@ -1,0 +1,69 @@
+<div class="navbar">
+  <div class="nav__inner">
+    <!-- 🍔 Hamburguesa (solo móvil) -->
+    <button 
+      class="nav__burger"
+      [class.is-open]="isMobileMenuOpen"
+      (click)="toggleMobileMenu()"
+      aria-label="Toggle menu">
+      <div class="burger"></div>
+    </button>
+
+    <!-- 🧭 Menú horizontal (solo desktop) -->
+    <ul class="menu">
+      <li><a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">🏠 Inicio</a></li>
+      <li><a [routerLink]="['/about']" routerLinkActive="active">👤 Sobre mí</a></li>
+      <li><a [routerLink]="['/galeria']" routerLinkActive="active">📸 Galería</a></li>
+      <li><a [routerLink]="['/contact']" routerLinkActive="active">📧 Contacto</a></li>
+      <!-- ❌ Quitado: enlaces visibles de Admin y Logout -->
+    </ul>
+
+    <!-- 🏷️ Brand/Logo -->
+    <div class="left">
+      <a
+        [routerLink]="['/']"
+        class="brand"
+        (click)="onBrandClick()"
+        [title]="isDevelopment() ? 'ILG' : 'ILG'">
+        ILG
+      </a>
+    </div>
+
+    <!-- 🎛️ Controles de la derecha -->
+    <div class="right-controls">
+      <button
+        class="theme-toggle"
+        (click)="toggleTheme()"
+        [attr.aria-label]="isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+        [title]="isDarkMode ? 'Modo claro' : 'Modo oscuro'">
+        <!-- ☀️ -->
+        <svg *ngIf="isDarkMode" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <!-- 🌙 -->
+        <svg *ngIf="!isDarkMode" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 📱 Menú lateral móvil -->
+<div class="sheet" [class.is-open]="isMobileMenuOpen">
+  <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()"><span>🏠</span> Inicio</a>
+  <a [routerLink]="['/about']" routerLinkActive="active" (click)="closeMobileMenu()"><span>👤</span> Sobre mí</a>
+  <a [routerLink]="['/galeria']" routerLinkActive="active" (click)="closeMobileMenu()"><span>📸</span> Galería</a>
+  <a [routerLink]="['/contact']" routerLinkActive="active" (click)="closeMobileMenu()"><span>📧</span> Contacto</a>
+  <!-- ❌ Quitado: Panel Admin y Cerrar Sesión -->
+</div>
+
+<div class="sheet-overlay" *ngIf="isMobileMenuOpen" (click)="closeMobileMenu()"></div>

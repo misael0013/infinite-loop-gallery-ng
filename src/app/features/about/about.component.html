@@ -1,0 +1,196 @@
+<!-- Hero Section -->
+<section class="about-hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Sobre mí</h1>
+        <p class="hero-subtitle">Especialista en fotografía nocturna y retratos artísticos</p>
+        
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">{{ stats.experience }}</span>
+            <span class="stat-label">Años de experiencia</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ stats.projects }}</span>
+            <span class="stat-label">Proyectos completados</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ stats.clients }}</span>
+            <span class="stat-label">Clientes satisfechos</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{{ stats.awards }}</span>
+            <span class="stat-label">Premios recibidos</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="hero-image">
+        <img src="assets/slideshow/hero.jpg" alt="Sobre el fotógrafo" />
+        <div class="image-overlay"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Story Section -->
+<section class="story-section" id="story">
+  <div class="container">
+    <div class="story-content">
+      <div class="story-text">
+        <h2 class="section-title">Mi historia</h2>
+        
+        <div class="story-paragraphs">
+          <p>
+            Mi pasión por la fotografía comenzó hace más de cinco años, cuando descubrí la magia 
+            que se esconde en las horas nocturnas. Lo que empezó como un hobby se convirtió rápidamente 
+            en una obsesión por capturar momentos únicos bajo la luz artificial de la ciudad.
+          </p>
+          
+          <p>
+            Especializado en <strong>fotografía nocturna</strong> y <strong>retratos artísticos</strong>, 
+            mi enfoque se centra en crear atmósferas íntimas y dramáticas que resalten la esencia 
+            de cada momento. Cada imagen cuenta una historia única, donde la luz y las sombras 
+            se convierten en los protagonistas principales.
+          </p>
+          
+          <p>
+            Mi trabajo ha sido reconocido en diversos festivales y exposiciones, pero lo que más 
+            me motiva es la capacidad de transformar sesiones ordinarias en experiencias 
+            extraordinarias para mis clientes.
+          </p>
+          
+          <p>
+            Con sede en <strong>Puerto Rico</strong>, trabajo tanto localmente como en proyectos 
+            internacionales, siempre buscando nuevas formas de explorar la creatividad a través 
+            de la lente.
+          </p>
+        </div>
+      </div>
+      
+      <div class="story-image">
+        <img src="assets/slideshow/DSC05196.jpg" alt="Proceso creativo" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section - Moved from Home -->
+<section class="services-section">
+  <div class="services-container">
+    <h2 class="services-title">Mis Servicios</h2>
+    <p class="services-subtitle">Especialidades que ofrezco para capturar tus momentos únicos</p>
+    
+    <div class="services-grid">
+      <div class="service-card" *ngFor="let service of services" (click)="onServiceClick(service.id)">
+        <div class="service-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" *ngIf="service.icon === 'camera'"></path>
+            <circle cx="12" cy="13" r="3" *ngIf="service.icon === 'camera'"></circle>
+            
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" *ngIf="service.icon === 'monitor'"></rect>
+            <line x1="8" y1="21" x2="16" y2="21" *ngIf="service.icon === 'monitor'"></line>
+            <line x1="12" y1="17" x2="12" y2="21" *ngIf="service.icon === 'monitor'"></line>
+            
+            <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" *ngIf="service.icon === 'activity'"></polyline>
+            
+            <circle cx="12" cy="12" r="3" *ngIf="service.icon === 'target'"></circle>
+            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1" *ngIf="service.icon === 'target'"></path>
+          </svg>
+        </div>
+        <h3 class="service-title">{{ service.title }}</h3>
+        <p class="service-description">{{ service.description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills-section" id="skills">
+  <div class="container">
+    <h2 class="section-title">Especialidades</h2>
+    <p class="section-subtitle">Áreas de expertise desarrolladas a lo largo de mi carrera</p>
+    
+    <div class="skills-grid">
+      <div class="skill-item" *ngFor="let skill of skills">
+        <div class="skill-header">
+          <span class="skill-icon">{{ skill.icon }}</span>
+          <span class="skill-name">{{ skill.name }}</span>
+          <span class="skill-percentage">{{ skill.level }}%</span>
+        </div>
+        <div class="skill-bar">
+          <div class="skill-progress" [style.width]="getSkillWidth(skill.level)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience Timeline -->
+<section class="experience-section" id="experience">
+  <div class="container">
+    <h2 class="section-title">Trayectoria</h2>
+    <p class="section-subtitle">Mi evolución profesional en la fotografía</p>
+    
+    <div class="timeline">
+      <div class="timeline-item" 
+           *ngFor="let exp of experience" 
+           [class.highlight]="exp.highlight">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="timeline-year">{{ exp.year }}</div>
+          <h3 class="timeline-title">{{ exp.title }}</h3>
+          <p class="timeline-description">{{ exp.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Philosophy Section -->
+<section class="philosophy-section">
+  <div class="container">
+    <div class="philosophy-content">
+      <h2 class="section-title">Mi filosofía</h2>
+      
+      <div class="philosophy-cards">
+        <div class="philosophy-card">
+          <div class="card-icon">🎨</div>
+          <h3>Arte en cada disparo</h3>
+          <p>Cada fotografía es una obra de arte única que debe emocionar y contar una historia.</p>
+        </div>
+        
+        <div class="philosophy-card">
+          <div class="card-icon">⚡</div>
+          <h3>Momento perfecto</h3>
+          <p>La paciencia y la preparación son clave para capturar ese instante irrepetible.</p>
+        </div>
+        
+        <div class="philosophy-card">
+          <div class="card-icon">💫</div>
+          <h3>Experiencia única</h3>
+          <p>Cada sesión debe ser memorable tanto para el cliente como para el resultado final.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="about-cta">
+  <div class="container">
+    <div class="cta-content">
+      <h2>¿Listo para crear algo increíble juntos?</h2>
+      <p>Conversemos sobre tu próximo proyecto fotográfico</p>
+      <div class="cta-buttons">
+        <a [routerLink]="['/contact']" class="cta-btn primary">
+          Iniciar proyecto
+        </a>
+        <a [routerLink]="['/galeria']" class="cta-btn secondary">
+          Ver mi trabajo
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

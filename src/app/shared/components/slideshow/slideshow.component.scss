@@ -1,0 +1,306 @@
+.ss { 
+  position: relative; 
+  border-radius: 16px; 
+  overflow: hidden;
+  border: 1px solid var(--border, rgba(255,255,255,0.1)); 
+  background: #0b0b0c; 
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+/* panorámico moderado */
+.ss__viewport { 
+  width: 100%; 
+  aspect-ratio: 16/9; 
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) { 
+  .ss__viewport { 
+    aspect-ratio: 18/9; 
+  } 
+}
+
+.ss__track { 
+  display: flex; 
+  width: 100%; 
+  height: 100%; 
+  transition: transform .45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.ss__slide { 
+  flex: 0 0 100%; 
+  position: relative; 
+  display: grid; 
+  place-items: center; 
+  
+  img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    object-position: center; 
+    transition: transform 0.3s ease;
+  }
+}
+
+.ss__caption {
+  /* Caption deshabilitado - no mostrar texto debajo de las imágenes */
+  display: none;
+}
+
+/* Navegación - FLECHAS SIN MOVIMIENTO */
+.ss__nav {
+  position: absolute;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.75);
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.95);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.85;
+  visibility: visible;
+  z-index: 10;
+  user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 18px;
+  font-weight: bold;
+  
+  /* MANTENER SIEMPRE CENTRADO - NO MOVER */
+  transform: translateY(-50%);
+  
+  &:hover:not(:disabled) {
+    background: rgba(255,255,255,0.95);
+    color: rgba(0,0,0,0.9);
+    border-color: rgba(255,255,255,0.95);
+    opacity: 1;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    /* NO cambiar transform en hover */
+  }
+  
+  /* CLICK ACTIVO - Solo cambiar colores, NO mover */
+  &:active:not(:disabled) {
+    background: rgba(255,255,255,1) !important;
+    color: rgba(0,0,0,1) !important;
+    /* NO cambiar transform en active */
+  }
+  
+  &:focus-visible {
+    outline: 2px solid rgba(255,255,255,0.8);
+    outline-offset: 3px;
+  }
+  
+  &:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+    background: rgba(0,0,0,0.4);
+    color: rgba(255,255,255,0.3);
+    border-color: rgba(255,255,255,0.1);
+  }
+}
+
+.ss__nav--left {
+  left: 16px;
+  
+  &::before {
+    content: '‹'; /* Flecha simple izquierda */
+  }
+}
+
+.ss__nav--right {
+  right: 16px;
+  
+  &::before {
+    content: '›'; /* Flecha simple derecha */
+  }
+}
+
+/* Mejorar visibilidad en hover del slideshow */
+.ss:hover .ss__nav:not(:disabled) {
+  opacity: 1;
+  background: rgba(0,0,0,0.85);
+}
+
+@media (max-width: 768px) {
+  .ss__nav {
+    width: 44px;
+    height: 44px;
+    opacity: 0.9;
+    font-size: 16px;
+  }
+  
+  .ss__nav--left {
+    left: 12px;
+  }
+  
+  .ss__nav--right {
+    right: 12px;
+  }
+}
+
+/* Dots/Indicadores - MÁS ABAJO Y SEPARADOS DEL BOTÓN */
+.ss__dots {
+  position: absolute;
+  bottom: 8px; /* Más abajo, bien separado del botón "Ver album" */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 4;
+  padding: 5px 10px; /* Más compacto */
+  background: rgba(0,0,0,0.4);
+  border-radius: 12px; /* Más pequeño */
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+  
+  button {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    position: relative;
+    
+    &:hover {
+      background: rgba(255,255,255,0.8);
+      transform: scale(1.3);
+    }
+    
+    &:focus-visible {
+      outline: 2px solid rgba(255,255,255,0.8);
+      outline-offset: 2px;
+    }
+    
+    &.is-active {
+      background: rgba(255,255,255,1);
+      width: 18px;
+      border-radius: 9px;
+      box-shadow: 0 1px 4px rgba(255,255,255,0.3);
+    }
+    
+    &:active {
+      transform: scale(0.9);
+      transition: all 0.15s ease;
+    }
+  }
+}
+
+/* Responsive dots */
+@media (max-width: 640px) {
+  .ss__dots {
+    bottom: 6px; /* Aún más abajo en móvil */
+    gap: 6px;
+    padding: 4px 8px;
+    
+    button {
+      width: 5px;
+      height: 5px;
+      
+      &.is-active {
+        width: 15px;
+        border-radius: 7px;
+      }
+    }
+  }
+}
+
+/* Animación suave al cargar */
+.ss__slide img {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Estados de carga */
+.ss__slide img[loading] {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 25%,
+    #2a2a2a 50%,
+    #1a1a1a 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Touch feedback para dispositivos móviles */
+@media (hover: none) {
+  .ss__nav {
+    &:hover:not(:disabled) {
+      background: rgba(0,0,0,0.75);
+      color: rgba(255,255,255,0.95);
+      border-color: rgba(255,255,255,0.3);
+      /* NO mover en touch devices */
+    }
+  }
+  
+  .ss__nav:active:not(:disabled) {
+    background: rgba(255,255,255,1) !important;
+    color: rgba(0,0,0,1) !important;
+    /* NO mover en touch devices */
+  }
+  
+  .ss__dots button:active {
+    transform: scale(0.8);
+  }
+}
+
+/* Mejorar la interacción en toda el área del slideshow */
+.ss {
+  &:focus-within .ss__nav:not(:disabled) {
+    opacity: 1;
+  }
+  
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Prevenir selección de texto y estados persistentes */
+.ss__nav {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Forzar reset de estados - MANTENER POSICIÓN */
+  &:not(:active):not(:focus) {
+    background: rgba(0,0,0,0.75);
+    color: rgba(255,255,255,0.95);
+    border-color: rgba(255,255,255,0.3);
+    transform: translateY(-50%); /* SIEMPRE centrado */
+  }
+}

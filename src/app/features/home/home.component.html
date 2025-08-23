@@ -1,0 +1,85 @@
+<section class="hero">
+  <div class="hero__bg" [style.background-image]="'url(' + heroUrl + ')'"></div>
+  <div class="hero__overlay"></div>
+
+  <div class="hero__inner">
+    <div class="hero__text">
+      <h1 class="hero__title">Infinite Loop</h1>
+      <div class="hero__kicker">GALLERY</div>
+    </div>
+  </div>
+</section>
+
+<!-- Título del slideshow -->
+<section class="home__tittle">
+  <div class="home__text">
+    {{ featuredTitle() }}
+  </div>
+</section>
+
+<!-- Slideshow featured -->
+<section class="home__ss">
+  <div class="ss__box">
+    <slideshow
+      [items]="slides()"
+      [autoplay]="true"
+      [interval]="4000"
+      [loop]="true">
+    </slideshow>
+
+    <a [routerLink]="['/galeria', slugDestacado()]" class="ss__cta-outline">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+      Ver álbum
+    </a>
+  </div>
+</section>
+
+<!-- Recent Work Section -->
+<section class="recent-work-section">
+  <div class="recent-work-container">
+    <div class="section-header">
+      <h2 class="section-title">Trabajos Recientes</h2>
+      <p class="section-subtitle">Explora mi portafolio más reciente</p>
+    </div>
+
+    <div class="work-grid">
+      <div
+        class="work-card"
+        *ngFor="let album of recentAlbums(); trackBy: trackByAlbumId"
+        [routerLink]="['/galeria', album.id]">
+        <div class="work-image">
+          <img [src]="album.coverImage || album.images[0]" [alt]="album.title" loading="lazy" />
+          <div class="work-overlay">
+            <div class="work-info">
+              <h3 class="work-title">{{ album.title }}</h3>
+              <p class="work-description">{{ album.description }}</p>
+              <div class="work-meta">
+                <span class="work-count">{{ album.images.length }} fotos</span>
+                <span class="work-date" *ngIf="album.date">{{ formatDate(album.date) }}</span>
+              </div>
+            </div>
+            <div class="work-cta">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7"></path>
+                <path d="M7 7h10v10"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-footer">
+      <a [routerLink]="['/galeria']" class="view-all-btn">
+        Ver toda la galería
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+          <path d="M12 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

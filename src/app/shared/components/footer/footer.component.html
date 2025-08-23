@@ -1,0 +1,52 @@
+<footer class="footer border-t">
+  <div class="container">
+    <div class="footer__stack">
+      <!-- Redes sociales -->
+      <div class="footer__social" aria-label="Redes sociales">
+        <a
+          [href]="facebookUrl"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+          class="icon-link"
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M22 12.06C22 6.49 17.52 2 11.94 2S2 6.49 2 12.06c0 5.01 3.66 9.16 8.44 9.94v-7.03H8.41v-2.9h2.03V9.41c0-2 1.2-3.11 3.03-3.11.88 0 1.8.16 1.8.16v1.98h-1.01c-1 0-1.31.62-1.31 1.26v1.52h2.23l-.36 2.9h-1.87V22c4.78-.78 8.44-4.93 8.44-9.94Z"
+            />
+          </svg>
+        </a>
+
+        <a
+          [href]="instagramUrl"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+          class="icon-link"
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5Zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5Zm5.75-2.25a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25Z"
+            />
+          </svg>
+        </a>
+
+        <a [href]="emailHref" aria-label="Enviar Email" class="icon-link">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 2v.01L12 12 4 6.01V6h16ZM4 18V8.24l7.4 5.55a1 1 0 0 0 1.2 0L20 8.24V18H4Z"
+            />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Copy -->
+      <div class="footer__copy">
+        © {{ year }} Infinite Loop Gallery — All rights reserved.
+      </div>
+    </div>
+  </div>
+</footer>

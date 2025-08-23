@@ -1,0 +1,42 @@
+<div class="ss"
+     (mouseenter)="onMouse(true)" (mouseleave)="onMouse(false)"
+     (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+
+  <div class="ss__viewport">
+    <div class="ss__track" [style.transform]="'translateX(' + (-index()*100) + '%)'">
+      <figure class="ss__slide" *ngFor="let it of items; let i = index">
+        <img [src]="it.src" [alt]="it.alt || ('slide ' + (i + 1))" loading="lazy" decoding="async" />
+        <figcaption *ngIf="it.caption" class="ss__caption">{{ it.caption }}</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- NAV - Flechas simples sin movimiento -->
+  <button class="ss__nav ss__nav--left"
+          type="button"
+          (click)="prev()"
+          [disabled]="!canGoPrev()"
+          [attr.aria-label]="'Imagen anterior'">
+  </button>
+
+  <button class="ss__nav ss__nav--right"
+          type="button"
+          (click)="next()"
+          [disabled]="!canGoNext()"
+          [attr.aria-label]="'Siguiente imagen'">
+  </button>
+
+  <!-- DOTS - Más abajo y separados -->
+  <div class="ss__dots" *ngIf="items.length > 1">
+    <button
+      *ngFor="let _ of items; let i = index"
+      [class.is-active]="i === index()"
+      (click)="goTo(i)"
+      [attr.aria-label]="'Ir a la imagen ' + (i + 1)"
+      type="button">
+    </button>
+  </div>
+
+  <!-- CTA INYECTADA DESDE EL PADRE -->
+  <ng-content select="[slideshow-cta]"></ng-content>
+</div>

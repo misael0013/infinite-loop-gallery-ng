@@ -1,0 +1,26 @@
+<div class="album-card" [routerLink]="['/galeria', album.id]">
+  <div class="card-image">
+    <img [src]="album.coverImage || album.images[0]" [alt]="album.title" loading="lazy" />
+    <div class="card-overlay">
+      <div class="card-info">
+        <h3 class="card-title">{{ album.title }}</h3>
+        <p class="card-description">{{ album.description }}</p>
+        <div class="card-meta">
+          <span class="views-count" *ngIf="album.views">
+            👁️ {{ formatViews(album.views) }}
+          </span>
+          <span class="images-count">
+            📷 {{ album.images.length }} fotos
+          </span>
+          <span class="date" *ngIf="album.date">{{ formatDate(album.date) }}</span>
+        </div>
+      </div>
+      <div class="card-action">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17L17 7"></path>
+          <path d="M7 7h10v10"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>

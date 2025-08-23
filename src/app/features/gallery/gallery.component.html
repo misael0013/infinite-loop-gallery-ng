@@ -1,0 +1,14 @@
+<section class="container mx-auto px-4 py-10">
+  <h1 class="gallery__text md:text-3xl font-semibold mb-6">Galería</h1>
+
+  <p *ngIf="loading" class="text-sm text-muted-foreground">Cargando…</p>
+  <p *ngIf="!loading && err" class="text-red-500">{{ err }}</p>
+
+  <div *ngIf="!loading && !err" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <app-album-card *ngFor="let album of albums" [album]="album"></app-album-card>
+  </div>
+
+  <p *ngIf="!loading && !err && albums.length === 0" class="text-muted-foreground">
+    Aún no hay álbumes.
+  </p>
+</section>
