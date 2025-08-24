@@ -1,102 +1,60 @@
-:host { display: block; }
-.album-card {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg-secondary, #1a1a1a);
-  border: 1px solid var(--border-color, #333333);
-  transition: all 0.3s ease;
-  cursor: pointer;
+:host { display:block; }
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    border-color: var(--accent-color, #ffffff);
-  }
+/* Card grande, bordes redondos, misma vibra del ejemplo */
+.card{
+  display:block;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--bg, #0f0f10) 96%, transparent), var(--bg, #0f0f10));
+  border:1px solid var(--border, #26282d);
+  border-radius:16px;
+  overflow:hidden;
+  text-decoration:none;
+  color:inherit;
+  box-shadow:0 1px 0 rgba(0,0,0,.15);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(0,0,0,.28);
+  border-color:color-mix(in oklab, var(--fg, #fff) 12%, var(--border, #26282d));
 }
 
-.album-image {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
+.card__cover{
+  width:100%;
+  aspect-ratio:16 / 10;   /* igual que tu referencia */
+  object-fit:cover;
+  background:color-mix(in oklab, var(--bg, #0f0f10) 92%, #000 8%);
+  transition:transform .35s ease, filter .35s ease;
+}
+.card:hover .card__cover{ transform:scale(1.02); filter:contrast(1.04) saturate(1.02); }
 
-  .cover-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  &:hover .cover-image {
-    transform: scale(1.05);
-  }
+.card__body{
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.card__title{
+  font-weight:700;
+  line-height:1.1;
+  display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; overflow:hidden;
 }
 
-.album-stats {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 12px;
-  backdrop-filter: blur(8px);
-  font-size: 0.75rem;
-  font-weight: 500;
+/* Pill categoría a la derecha */
+.badge{
+  font-size:12px;
+  color:color-mix(in oklab, var(--bg, #0f0f10), #000 10%);
+  background:color-mix(in oklab, var(--fg, #fff) 90%, #fff 10%);
+  border:1px solid color-mix(in oklab, var(--fg, #fff) 18%, var(--border, #26282d));
+  border-radius:999px;
+  padding:2px 8px;
+  white-space:nowrap;
 }
 
-.views-count {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  white-space: nowrap;
-}
+/* Nada más: mantenemos simple como en tu screenshot */
 
-.album-info {
-  padding: 16px;
-}
 
-.album-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0 0 8px 0;
-  color: var(--text-primary, #ffffff);
-}
-
-.album-description {
-  font-size: 0.9rem;
-  color: var(--text-secondary, #cfcfcf);
-  margin: 0 0 12px 0;
-  line-height: 1.4;
-}
-
-.album-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-
-  .tag {
-    background: var(--bg-primary, #0f0f0f);
-    color: var(--text-secondary, #cfcfcf);
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    border: 1px solid var(--border-color, #333333);
-  }
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .album-image {
-    height: 160px;
-  }
-  
-  .album-info {
-    padding: 12px;
-  }
-  
-  .album-title {
-    font-size: 1rem;
-  }
+/* Responsive ajustes */
+@media (min-width: 1024px){
+  .title { font-size: 1rem; }
 }

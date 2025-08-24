@@ -1,18 +1,19 @@
+// Interface principal del Álbum
 export interface Album {
   id: string;
   title: string;
   description: string;
   images: string[];
-  coverImage?: string; // Imagen principal del álbum (opcional, usa images[0] como fallback)
-  date?: Date; // Fecha de creación o última actualización
-  createdAt?: Date; // Alias para compatibilidad con el servicio existente
-  category?: string; // Categoría del álbum (night, studio, street, outdoor, etc.)
-  featured?: boolean; // Si es un álbum destacado
-  tags?: string[]; // Tags para filtrado
-  location?: string; // Ubicación donde se tomaron las fotos
-  client?: string; // Cliente (para trabajos comerciales)
-  views?: number; // Número de vistas del álbum
-  uniqueViews?: number; // Vistas únicas del álbum
+  coverImage?: string;          // Imagen principal
+  date?: Date;                  // Fecha de creación o última actualización
+  createdAt?: Date;             // Alias para compatibilidad con el servicio existente
+  category?: string;            // Categoría (night, studio, street, etc.)
+  featured?: boolean;           // Destacado
+  tags?: string[];              // Tags
+  location?: string;            // Ubicación
+  client?: string;              // Cliente
+  views?: number;               // Vistas
+  uniqueViews?: number;         // Vistas únicas
   equipment?: {
     camera?: string;
     lens?: string;
@@ -23,6 +24,10 @@ export interface Album {
     likes?: number;
     downloads?: number;
   };
+
+  /** 🔐 Privacidad */
+  isPrivate?: boolean;
+  password?: string;
 }
 
 // Interface para el sistema de vistas

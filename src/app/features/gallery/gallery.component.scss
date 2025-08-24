@@ -1,13 +1,100 @@
-:host {
-  display: block;
+:host { display:block; }
+
+/* Empuja el título hacia abajo para que no quede pegado al navbar */
+.gallery{
+  /* respeta el notch (iOS) y da aire extra */
+  padding-top: clamp(24px, env(safe-area-inset-top, 0px) + 18px, 48px);
 }
 
-.gallery__text{
-  text-align: center;
+.title{
+  margin-top: 15px;      /* un pequeño colchón adicional */
+  line-height: 3.15;
+  letter-spacing: .15cap;
+  font-size: clamp(25px,1.4vw,16px);
+  letter-spacing: .42em; 
   text-transform: uppercase;
-  letter-spacing: 1.3cap;
-  display:inline-flex;
-  padding: 14px;
-
-  
+  color: #fff; 
+  opacity: .95; 
+  text-shadow: 0 1px 4px rgba(0,0,0,.45);
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.6);
+  text-underline-offset: 8px;
+  text-decoration-thickness: 1px;
+  text-align: center;
+  font-weight: 600;
 }
+
+/* Píldoras */
+.pills{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px; }
+.pill{
+  padding:8px 14px; border-radius:999px; cursor:pointer;
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  background: rgba(255,255,255,.06); color:inherit;
+  font-weight:700; font-size:.65rem;
+}
+.pill.active{ background: rgba(255,255,255,.12); }
+
+/* Buscador */
+.search{ position:relative; 
+  display:flex; 
+  align-items:center; 
+  gap:8px; 
+  margin-bottom:16px; }
+
+.search input{
+  flex: 1 1 auto;
+  padding:12px 14px;
+  border-radius:999px;
+  background: rgba(255,255,255,.08);
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  color:inherit;
+  font-size: .65rem;
+}
+.search .clear{
+  position:absolute; 
+  right:62px; 
+  width:32px; 
+  height:32px;
+  border-radius:999px; 
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  background:transparent; 
+  color:inherit; cursor:pointer;
+}
+.search .go{
+  min-width:54px; 
+  height:40px; 
+  border-radius:999px; cursor:pointer;
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  background: rgba(255,255,255,.10); 
+  color:inherit; 
+  font-weight:700;
+  font-size: .65rem;
+}
+
+/* === GRID DE ALBUMES EXACTAMENTE COMO EL EJEMPLO: 1 COLUMNA EN MOBILE === */
+.grid{
+  display:grid;
+  gap:16px;
+  grid-template-columns: 1fr;             /* mobile: 1 card grande */
+}
+
+@media (min-width: 900px){
+  .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }  /* tablet */
+}
+@media (min-width: 1280px){
+  .grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }  /* desktop ancho */
+}
+
+/* Pager (si lo usas) */
+.pager{ margin-top:16px; 
+  display:flex; gap:6px; align-items:center; justify-content:center; flex-wrap:wrap; }
+.pager button{
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  background: rgba(255,255,255,.06); color: inherit;
+  border-radius:10px; padding:8px 12px; cursor:pointer; min-width:40px;
+}
+.pager button[disabled]{ opacity:.45; cursor:not-allowed; }
+.page-info{ opacity:.75; padding:8px 10px; }
+
+.muted{ opacity:.75; }
+.error{ color:#ef4444; }

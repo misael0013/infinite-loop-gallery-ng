@@ -17,11 +17,10 @@
   <!-- Navigation Tabs -->
   <nav class="admin-nav">
     <div class="nav-tabs">
-      <button 
-        *ngFor="let tab of tabs"
-        class="nav-tab"
-        [class.active]="activeTab === tab.id"
-        (click)="setActiveTab(tab.id)">
+      <button *ngFor="let tab of tabs"
+              class="nav-tab"
+              [class.active]="activeTab === tab.id"
+              (click)="setActiveTab(tab.id)">
         <span class="tab-icon">{{ tab.icon }}</span>
         <span class="tab-label">{{ tab.label }}</span>
       </button>
@@ -31,89 +30,84 @@
   <!-- Main Content -->
   <main class="admin-main">
     <div class="content-container">
-      
+
       <!-- Dashboard Tab -->
       <div *ngIf="activeTab === 'dashboard'" class="tab-content">
         <div class="content-header">
           <h2>Dashboard</h2>
           <p>Resumen general del sistema</p>
         </div>
-        
+
         <div class="dashboard-grid">
           <div class="stat-card">
             <div class="stat-icon">📷</div>
             <div class="stat-info">
               <h3>Total Álbumes</h3>
-              <p class="stat-number">24</p>
+              <p class="stat-number">{{ stats?.totalAlbums || 0 }}</p>
             </div>
           </div>
-          
+
           <div class="stat-card">
             <div class="stat-icon">🖼️</div>
             <div class="stat-info">
               <h3>Total Fotos</h3>
-              <p class="stat-number">1,234</p>
+              <p class="stat-number">{{ stats?.totalImages || 0 }}</p>
             </div>
           </div>
-          
+
           <div class="stat-card">
             <div class="stat-icon">👥</div>
             <div class="stat-info">
-              <h3>Usuarios</h3>
-              <p class="stat-number">5</p>
+              <h3>Visitantes únicos</h3>
+              <p class="stat-number">{{ viewStats?.uniqueVisitors || 0 }}</p>
             </div>
           </div>
-          
+
           <div class="stat-card">
-            <div class="stat-icon">💾</div>
+            <div class="stat-icon">📈</div>
             <div class="stat-info">
-              <h3>Almacenamiento</h3>
-              <p class="stat-number">2.1 GB</p>
+              <h3>Vistas hoy</h3>
+              <p class="stat-number">{{ viewStats?.viewsToday || 0 }}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Albums Tab -->
+      <!-- Albums Tab (ACTUALIZADO) -->
       <div *ngIf="activeTab === 'albums'" class="tab-content">
         <div class="content-header">
           <h2>Gestión de Álbumes</h2>
           <p>Administra todos los álbumes de fotos</p>
         </div>
-        
+
         <div class="toolbar">
-          <button class="btn btn-primary">
-            <span>➕</span>
-            Nuevo Álbum
+          <button class="btn btn-primary" (click)="createAlbum()">
+            <span>➕</span> Nuevo Álbum
           </button>
-          <button class="btn btn-secondary">
-            <span>📤</span>
-            Importar
+          <button class="btn btn-secondary" (click)="exportData()">
+            <span>📤</span> Exportar
           </button>
         </div>
-        
+
         <div class="albums-list">
-          <div class="album-item">
-            <div class="album-thumbnail"></div>
+          <div class="album-item" *ngFor="let a of albums">
+            <div class="album-thumbnail">
+              <img [src]="a.coverImage || a.images[0]" alt=""
+                   style="width:100%;height:100%;object-fit:cover;border-radius:8px"/>
+            </div>
             <div class="album-info">
-              <h4>Vacaciones 2024</h4>
-              <p>45 fotos • Creado el 15 Mar 2024</p>
+              <h4>{{ a.title }}</h4>
+              <p>
+                {{ a.images.length }} fotos
+                • {{ a.createdAt ? (formatDate(a.createdAt)) : '' }}
+                • <span class="views-badge">👁 {{ formatViews(a.views || 0) }}</span>
+                <span class="badge" style="margin-left:6px">{{ a.category || 'General' }}</span>
+                <span *ngIf="a.isPrivate" class="badge" style="margin-left:6px">Privado</span>
+              </p>
             </div>
             <div class="album-actions">
-              <button class="action-btn edit">✏️</button>
-              <button class="action-btn delete">🗑️</button>
-            </div>
-          </div>
-          
-          <div class="album-item">
-            <div class="album-thumbnail"></div>
-            <div class="album-info">
-              <h4>Eventos Corporativos</h4>
-              <p>128 fotos • Creado el 8 Feb 2024</p>
-            </div>
-            <div class="album-actions">
-              <button class="action-btn edit">✏️</button>
-              <button class="action-btn delete">🗑️</button>
+              <a class="action-btn edit" [routerLink]="['/admin/album', a.id]" title="Editar">✏️</a>
+              <button class="action-btn delete" (click)="deleteAlbum(a.id)" title="Eliminar">🗑️</button>
             </div>
           </div>
         </div>
@@ -125,14 +119,11 @@
           <h2>Gestión de Usuarios</h2>
           <p>Administra usuarios y permisos</p>
         </div>
-        
+
         <div class="toolbar">
-          <button class="btn btn-primary">
-            <span>👤</span>
-            Nuevo Usuario
-          </button>
+          <button class="btn btn-primary"><span>👤</span> Nuevo Usuario</button>
         </div>
-        
+
         <div class="users-table">
           <div class="table-header">
             <div class="header-cell">Usuario</div>
@@ -141,7 +132,7 @@
             <div class="header-cell">Estado</div>
             <div class="header-cell">Acciones</div>
           </div>
-          
+
           <div class="table-row">
             <div class="cell">admin</div>
             <div class="cell">admin&#64;ejemplo.com</div>
@@ -152,53 +143,6 @@
               <button class="action-btn delete">🗑️</button>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Settings Tab -->
-      <div *ngIf="activeTab === 'settings'" class="tab-content">
-        <div class="content-header">
-          <h2>Configuración</h2>
-          <p>Ajustes generales del sistema</p>
-        </div>
-        
-        <div class="settings-grid">
-          <div class="setting-group">
-            <h3>General</h3>
-            <div class="setting-item">
-              <label>Nombre del sitio</label>
-              <input type="text" value="Infinite Loop Gallery" class="setting-input">
-            </div>
-            <div class="setting-item">
-              <label>Descripción</label>
-              <textarea class="setting-input" rows="3">Galería de fotos profesional</textarea>
-            </div>
-          </div>
-          
-          <div class="setting-group">
-            <h3>Apariencia</h3>
-            <div class="setting-item">
-              <label>Tema por defecto</label>
-              <select class="setting-input">
-                <option value="dark">Oscuro</option>
-                <option value="light">Claro</option>
-                <option value="auto">Automático</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="setting-group">
-            <h3>Almacenamiento</h3>
-            <div class="setting-item">
-              <label>Tamaño máximo de archivo (MB)</label>
-              <input type="number" value="10" class="setting-input">
-            </div>
-          </div>
-        </div>
-        
-        <div class="toolbar">
-          <button class="btn btn-primary">Guardar Cambios</button>
-          <button class="btn btn-secondary">Restablecer</button>
         </div>
       </div>
 

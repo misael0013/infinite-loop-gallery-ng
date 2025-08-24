@@ -1,14 +1,44 @@
-<section class="container mx-auto px-4 py-10">
-  <h1 class="gallery__text md:text-3xl font-semibold mb-6">Galería</h1>
+<section class="gallery container mx-auto px-4 py-6">
+  <h1 class="title">Albums</h1>
 
-  <p *ngIf="loading" class="text-sm text-muted-foreground">Cargando…</p>
-  <p *ngIf="!loading && err" class="text-red-500">{{ err }}</p>
-
-  <div *ngIf="!loading && !err" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    <app-album-card *ngFor="let album of albums" [album]="album"></app-album-card>
+  <!-- Píldoras de categorías -->
+  <div class="pills" *ngIf="categories.length">
+    <button
+      class="pill"
+      *ngFor="let c of categories"
+      [class.active]="activeCategory===c"
+      (click)="setCategory(c)">
+      {{ c }}
+    </button>
   </div>
 
-  <p *ngIf="!loading && !err && albums.length === 0" class="text-muted-foreground">
-    Aún no hay álbumes.
-  </p>
+  <!-- Buscador que navega directo al álbum -->
+  <div class="search">
+    <input
+      type="search"
+      placeholder="Buscar álbum por título…"
+      [(ngModel)]="query"
+      (keyup.enter)="searchAndGo()"
+      aria-label="Buscar álbum" />
+    <button *ngIf="query" class="clear" type="button" (click)="clearQuery()" aria-label="Limpiar">×</button>
+    <button class="go" type="button" (click)="searchAndGo()">Ir</button>
+  </div>
+
+  <p *ngIf="loading" class="muted">Cargando…</p>
+  <p *ngIf="!loading && err" class="error">{{ err }}</p>
+
+  <div *ngIf="!loading && !err" class="grid">
+    <app-album-card
+      *ngFor="let album of pageItems; trackBy: trackById"
+      [album]="album">
+    </app-album-card>
+  </div>
+
+  <div class="pager" *ngIf="!loading && !err && totalPages > 1">
+    <button (click)="prevPage()" [disabled]="page<=1">&laquo; Anterior</button>
+    <span class="page-info">Página {{ page }} de {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="page>=totalPages">Siguiente &raquo;</button>
+  </div>
+
+  <p *ngIf="!loading && !err && filtered.length===0" class="muted">No hay álbumes que coincidan.</p>
 </section>

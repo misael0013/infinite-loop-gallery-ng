@@ -1,139 +1,49 @@
-<div class="album-detail" *ngIf="!isLoading && album; else loadingTemplate" (keydown)="onKeydown($event)" tabindex="0">
-  
-  <!-- Header del álbum -->
-  <div class="album-header">
-    <div class="container">
-      <nav class="breadcrumb">
-        <a [routerLink]="['/']">Inicio</a>
-        <span>/</span>
-        <a [routerLink]="['/galeria']">Galería</a>
-        <span>/</span>
-        <span>{{ album.title }}</span>
-      </nav>
-      
-      <div class="album-info">
-        <h1 class="album-title">{{ album.title }}</h1>
-        <p class="album-description">{{ album.description }}</p>
-        
-        <div class="album-meta">
-          <span class="views-badge" *ngIf="album.views">👁️ {{ formatViews(album.views) }}</span>
-          <span class="unique-badge" *ngIf="album.uniqueViews">👤 {{ album.uniqueViews }} únicos</span>
-          <span class="count-badge">📷 {{ album.images.length }} fotos</span>
-          <span class="date-badge" *ngIf="album.date">📅 {{ formatDate(album.date) }}</span>
-        </div>
-        
-        <div class="tags" *ngIf="album.tags && album.tags.length > 0">
-          <span class="tag" *ngFor="let tag of album.tags">#{{ tag }}</span>
-        </div>
+<section class="album-detail" *ngIf="album as a; else notFound">
+  <header class="album-header">
+    <a routerLink="/galeria" class="back">← Galería</a>
+    <h1 class="album-title">{{ a.title }}</h1>
+  </header>
 
-        <!-- Información del equipo -->
-        <div class="equipment-info" *ngIf="album.equipment">
-          <span class="equipment-badge" *ngIf="album.equipment.camera">
-            📷 {{ album.equipment.camera }}
-          </span>
-          <span class="lens-badge" *ngIf="album.equipment.lens">
-            🔍 {{ album.equipment.lens }}
-          </span>
-          <span class="settings-badge" *ngIf="album.equipment.settings">
-            ⚙️ {{ album.equipment.settings }}
-          </span>
-        </div>
-        
-        <div class="album-actions">
-          <button (click)="shareAlbum()" class="share-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-              <polyline points="16,6 12,2 8,6"></polyline>
-              <line x1="12" y1="2" x2="12" y2="15"></line>
-            </svg>
-            Compartir
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Grid de imágenes -->
+  <!-- Grid compacto tipo mosaico -->
   <div class="images-grid">
-    <div class="container">
-      <div class="grid">
-        <div 
-          class="image-item" 
-          *ngFor="let image of album.images; let i = index"
-          (click)="openLightbox(i)"
-        >
-          <img [src]="image" [alt]="album.title + ' - Imagen ' + (i + 1)" loading="lazy" />
-          <div class="image-overlay">
-            <div class="zoom-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-                <line x1="11" y1="8" x2="11" y2="14"></line>
-                <line x1="8" y1="11" x2="14" y2="11"></line>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Lightbox -->
-  <div class="lightbox" *ngIf="isLightboxOpen" (click)="closeLightbox()">
-    <div class="lightbox-content" (click)="$event.stopPropagation()">
-      <button class="close-btn" (click)="closeLightbox()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
+    <figure class="shot" *ngFor="let src of images; let i = index">
+      <button class="media" type="button" (click)="openLightbox(i)">
+        <img [src]="src" [alt]="a.title || 'Foto'" loading="lazy" decoding="async" />
       </button>
-      
-      <button class="nav-btn prev-btn" (click)="prevImage()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15,18 9,12 15,6"></polyline>
-        </svg>
-      </button>
-      
-      <img [src]="album.images[selectedImageIndex]" [alt]="album.title" />
-      
-      <button class="nav-btn next-btn" (click)="nextImage()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9,18 15,12 9,6"></polyline>
-        </svg>
-      </button>
-      
-      <div class="image-counter">
-        {{ selectedImageIndex + 1 }} / {{ album.images.length }}
-      </div>
-    </div>
+      <figcaption class="caption">{{ getFilename(src) }}</figcaption>
+    </figure>
   </div>
+</section>
 
-  <!-- Álbumes relacionados -->
-  <div class="related-albums" *ngIf="getRelatedAlbums().length > 0">
-    <div class="container">
-      <h2>Más trabajos similares</h2>
-      <div class="related-grid">
-        <div 
-          class="related-item" 
-          *ngFor="let relatedAlbum of getRelatedAlbums()"
-          [routerLink]="['/galeria', relatedAlbum.id]"
-        >
-          <img [src]="relatedAlbum.coverImage || relatedAlbum.images[0]" [alt]="relatedAlbum.title" />
-          <div class="related-info">
-            <h3>{{ relatedAlbum.title }}</h3>
-            <p>{{ relatedAlbum.images.length }} fotos</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Template de carga -->
-<ng-template #loadingTemplate>
-  <div class="loading-container">
-    <div class="loading-spinner"></div>
-    <p>Cargando álbum...</p>
-  </div>
+<ng-template #notFound>
+  <div class="empty">Álbum no encontrado.</div>
 </ng-template>
+
+<!-- Lightbox con fondo borroso -->
+<div
+  class="lightbox"
+  *ngIf="showLightbox()"
+  (click)="closeLightbox()"
+  (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)"
+>
+  <div class="lightbox__inner" (click)="$event.stopPropagation()">
+    <div class="lb-blur" [style.background-image]="'url(' + currentSrc + ')'"></div>
+
+    <img class="lb-image" [src]="currentSrc" [alt]="album?.title || 'Foto'" />
+
+    <button class="lightbox__nav lightbox__prev" type="button" (click)="prev()" aria-label="Anterior">‹</button>
+    <button class="lightbox__nav lightbox__next" type="button" (click)="next()" aria-label="Siguiente">›</button>
+
+    <a class="lightbox__download"
+       [href]="currentSrc"
+       [attr.download]="currentFilename"
+       title="Descargar"
+       (click)="$event.stopPropagation()"
+       (mousedown)="$event.preventDefault()">⤓</a>
+
+    <button class="lightbox__close" type="button" (click)="closeLightbox()" aria-label="Cerrar">×</button>
+
+    <div class="lightbox__counter">{{ current() + 1 }} / {{ images.length }}</div>
+  </div>
+</div>
