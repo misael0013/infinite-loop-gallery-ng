@@ -116,7 +116,10 @@
 *::before,
 *::after { 
   box-sizing: border-box; 
-  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: color 0.25s ease, 
+  background-color 0.25s ease, 
+  border-color 0.25s ease, 
+  box-shadow 0.25s ease;
 }
 
 html, body { 
@@ -129,7 +132,8 @@ body {
   background: var(--bg);
   color: var(--text-primary);
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-  transition: background-color .3s ease, color .3s ease;
+  transition: 
+  background-color .3s ease, color .3s ease;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -275,8 +279,13 @@ html {
 
 /* ===== ANIMATION UTILITIES ===== */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); }
 }
 
 @keyframes slideIn {

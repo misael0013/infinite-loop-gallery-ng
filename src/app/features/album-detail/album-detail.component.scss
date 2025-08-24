@@ -1,56 +1,151 @@
-:host { display:block; }
+:host { 
+  display:block; 
+}
 
 .album-detail{
   padding: clamp(18px, env(safe-area-inset-top, 0px) + 50px, 42px) 20px 8px;
 }
 
 /* Header minimal */
-.album-header{ display:grid; gap:6px; padding:10px 12px 6px; }
-.back{ font-size:.9rem; opacity:.85; text-decoration:none; color:inherit; }
-.album-title{ margin:0; font-weight:700; font-size:1.2rem; text-align:left; }
+.album-header{ 
+  display:grid; 
+  gap:6px; 
+  padding:10px 12px 6px; 
+}
+
+.back{ 
+  font-size:.9rem; 
+  opacity:.85; 
+  text-decoration:none; 
+  color:inherit;
+ }
+
+.album-title{ 
+margin-top: 15px;      /* un pequeño colchón adicional */
+  line-height: 1.15;
+  font-size: clamp(25px,1.4vw,16px);
+ 
+  text-transform: uppercase;
+  color: #fff; 
+  opacity: .95; 
+  text-shadow: 0 1px 4px rgba(0,0,0,.45);
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.6);
+  text-underline-offset: 8px;
+  text-decoration-thickness: 1px;
+  text-align: center;
+  font-weight: 600;
+ }
 
 /* 🔐 Lock */
-.lock{display:grid;place-items:center;padding:24px}
+.lock{
+  display:grid;
+  place-items:center;
+  padding:24px
+}
+
 .lock__card{
   width:min(420px,92vw);
   border:1px solid var(--border,#333);
-  background:#151515;color:inherit;border-radius:14px;
-  padding:16px; display:grid; gap:12px;
+  background:#151515;
+  color:inherit;
+  border-radius:14px;
+  padding:16px; 
+  display:grid; 
+  gap:12px;
 }
-.lock__card input{border:1px solid var(--border,#333);background:#0f0f10;color:inherit;border-radius:10px;padding:10px;width:100%}
-.row{display:flex;gap:10px;justify-content:flex-end}
-.btn{border:1px solid var(--border,#333);background:#eaeaea;color:#111;border-radius:10px;padding:8px 12px;cursor:pointer}
+
+.lock__card input{
+  border:1px solid var(--border,#333);
+  background:#0f0f10;
+  color:inherit;
+  border-radius:10px;
+  padding:10px;
+  width:100%
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  justify-content:flex-end
+}
+
+.btn
+{border:1px solid var(--border,#333);
+  background:#eaeaea;
+  color:#111;
+  border-radius:10px;
+  padding:8px 12px;cursor:pointer
+}
 
 /* Grid tipo mosaico */
 .images-grid{
-  display:grid; gap:12px; padding:8px 12px 28px;
+  display:grid; 
+  gap:12px; 
+  padding:8px 12px 28px;
   grid-template-columns: repeat(3, minmax(0,1fr));
 }
+
 @media (max-width: 640px){ .images-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
 
-.shot{ margin:0; width:100%; }
+.shot{ margin:0; 
+  width:100%; 
+}
 .media{
-  position:relative; border-radius:12px; overflow:hidden; cursor:zoom-in;
+  position:relative; 
+  border-radius:12px; 
+  overflow:hidden; cursor:zoom-in;
   border:1px solid var(--border, #26282d);
   background: color-mix(in oklab, var(--bg, #0f0f10) 92%, #000 8%);
   aspect-ratio:4 / 3;
-  padding:0; display:block; width:100%;
+  padding:0; 
+  display:block; 
+  width:100%;
 }
-.media img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .25s ease, filter .25s ease; }
-.media:hover img{ transform:scale(1.02); filter:contrast(1.04) saturate(1.02); }
 
-.caption{ text-align:center; margin-top:6px; opacity:.9; font-size:.84rem; word-break:break-word; }
+.media img{ 
+  width:100%; 
+  height:100%; 
+  object-fit:cover; 
+  display:block; 
+  transition:transform .25s ease, filter .25s ease; 
+}
+
+.media:hover img{ 
+  transform:scale(1.02); filter:contrast(1.04) saturate(1.02); 
+}
+
+.caption{ 
+  text-align:center; 
+  margin-top:6px; 
+  opacity:.9; 
+  font-size:.84rem; 
+  word-break:break-word;
+ }
 
 /* ===== Lightbox con fondo borroso ===== */
-.lightbox{ position:fixed; inset:0; background:transparent; z-index:1000; }
+.lightbox{ 
+  position:fixed; 
+  inset:0; 
+  background:transparent; 
+  z-index:1000; 
+}
+
 .lightbox__inner{
-  position:relative; width:100vw; height:100vh; display:grid; place-items:center; overflow:hidden;
+  position:relative; 
+  width:100vw; 
+  height:100vh; 
+  display:grid; 
+  place-items:center; 
+  overflow:hidden;
   background: rgba(0,0,0,.65);
 }
 
 .lb-blur{
-  position:absolute; inset:0;
-  background-size:cover; background-position:center;
+  position:absolute; 
+  inset:0;
+  background-size:cover; 
+  background-position:center;
   filter: blur(28px) saturate(1.15) brightness(.8);
   transform: scale(1.08);
   z-index:0;
@@ -66,30 +161,73 @@
 
 /* Controles */
 .lightbox__close,.lightbox__download{
-  position:absolute; top:20px; width:40px; height:40px; border-radius:999px;
+  position:absolute; 
+  top:20px; 
+  width:40px; 
+  height:40px; 
+  border-radius:999px;
   border:1px solid var(--border, #26282d);
   background: color-mix(in oklab, var(--card, #1b1c1f) 90%, transparent);
-  color: var(--fg, #f5f5f5); font-size:22px; cursor:pointer; opacity:.95;
-  display:grid; place-items:center; text-decoration:none; z-index:2;
+  color: var(--fg, #f5f5f5); 
+  font-size:22px; cursor:pointer; 
+  opacity:.95;
+  display:grid; 
+  place-items:center; 
+  text-decoration:none; 
+  z-index:2;
 }
-.lightbox__close{ right:24px; }
-.lightbox__download{ right:72px; font-size:18px; }
-.lightbox__close:hover,.lightbox__download:hover{ opacity:1; }
+
+.lightbox__close{ 
+  right:24px; 
+}
+
+.lightbox__download{ 
+  right:72px; 
+  font-size:18px;
+ }
+
+.lightbox__close:hover,.lightbox__download:hover{ 
+  opacity:1; 
+}
 
 .lightbox__nav{
-  position:absolute; top:50%; transform:translateY(-50%);
-  width:44px; height:44px; border-radius:999px;
+  position:absolute; 
+  top:50%; 
+  transform:translateY(-50%);
+  width:44px; 
+  height:44px; 
+  border-radius:999px;
   border:1px solid var(--border, #26282d);
   background: color-mix(in oklab, var(--card, #1b1c1f) 90%, transparent);
-  color: var(--fg, #f5f5f5); font-size:28px; cursor:pointer; opacity:.95; z-index:2;
+  color: var(--fg, #f5f5f5); 
+  font-size:28px; cursor:pointer; 
+  opacity:.95; 
+  z-index:2;
 }
-.lightbox__prev{ left:24px; } .lightbox__next{ right:24px; }
-.lightbox__nav:hover{ opacity:1; }
+
+.lightbox__prev{ 
+  left:24px;
+ } 
+
+ .lightbox__next{ 
+  right:24px;
+ }
+
+.lightbox__nav:hover{ 
+  opacity:1; 
+}
 
 .lightbox__counter{
-  position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
-  font-size:14px; color:var(--fg, #f5f5f5);
+  position:absolute; 
+  bottom:20px; 
+  left:50%; 
+  transform:translateX(-50%);
+  font-size:14px; 
+  color:var(--fg, #f5f5f5);
   background: color-mix(in oklab, var(--card, #1b1c1f) 90%, transparent);
   border:1px solid var(--border, #26282d);
-  border-radius:999px; padding:6px 10px; opacity:.95; z-index:2;
+  border-radius:999px; 
+  padding:6px 10px; 
+  opacity:.95; 
+  z-index:2;
 }

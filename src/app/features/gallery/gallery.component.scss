@@ -25,21 +25,32 @@
 }
 
 /* Píldoras */
-.pills{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px; }
+.pills{ display:flex; 
+  flex-wrap:wrap; 
+  gap:12px; 
+  margin-bottom:14px; 
+}
+
 .pill{
-  padding:8px 14px; border-radius:999px; cursor:pointer;
+  padding:8px 14px; 
+  border-radius:999px; cursor:pointer;
   border:1px solid var(--border, rgba(255,255,255,.12));
-  background: rgba(255,255,255,.06); color:inherit;
+  background: rgba(255,255,255,.06); 
+  color:inherit;
   font-weight:700; font-size:.65rem;
 }
-.pill.active{ background: rgba(255,255,255,.12); }
+
+.pill.active{ 
+  background: rgba(255,255,255,.12);
+ }
 
 /* Buscador */
 .search{ position:relative; 
   display:flex; 
   align-items:center; 
   gap:8px; 
-  margin-bottom:16px; }
+  margin-bottom:16px; 
+}
 
 .search input{
   flex: 1 1 auto;
@@ -86,15 +97,35 @@
 }
 
 /* Pager (si lo usas) */
-.pager{ margin-top:16px; 
-  display:flex; gap:6px; align-items:center; justify-content:center; flex-wrap:wrap; }
+.pager{ 
+  margin-top:16px; 
+  display:flex; gap:6px; 
+  align-items:center; 
+  justify-content:center; 
+  flex-wrap:wrap;
+}
+
 .pager button{
   border:1px solid var(--border, rgba(255,255,255,.12));
   background: rgba(255,255,255,.06); color: inherit;
-  border-radius:10px; padding:8px 12px; cursor:pointer; min-width:40px;
+  border-radius:10px; 
+  padding:8px 12px; cursor:pointer; 
+  min-width:40px;
 }
-.pager button[disabled]{ opacity:.45; cursor:not-allowed; }
-.page-info{ opacity:.75; padding:8px 10px; }
 
-.muted{ opacity:.75; }
-.error{ color:#ef4444; }
+.pager button[disabled]{ 
+  opacity:.45; cursor:not-allowed;
+ }
+
+.page-info{ 
+  opacity:.75; 
+  padding:8px 10px; 
+}
+
+.muted{ 
+  opacity:.75; 
+}
+
+.error{ 
+  color:#ef4444; 
+}
